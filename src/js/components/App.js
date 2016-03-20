@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductCheckInput from './ProductCheckInput';
-export default class App extends React.Component {
-  render() {
+var App = React.createClass ({
+  render : function () {
     var paddingStyle = {
       height: 400
     };
@@ -48,4 +48,5 @@ export default class App extends React.Component {
       </div>
     );
   }
-}
+});
+export default App;

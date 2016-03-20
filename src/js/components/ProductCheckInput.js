@@ -1,7 +1,11 @@
 import React from 'react';
+import Reflux from 'reflux';
+import UIDActions from '../actions/uid-actions';
+import UIDStore from '../stores/uid-store';
 
-export default class ProductCheckInput extends React.Component {
-  render() {
+var ProductCheckInput = React.createClass ({
+  mixins : [Reflux.listenTo(UIDStore, 'onChange')],
+  render : function() {
     return (
       <div className="row">
         <form className="form-group" role="form">
@@ -14,9 +18,23 @@ export default class ProductCheckInput extends React.Component {
         </form>
       </div>
     );
-  }
+  },
 
   check() {
+    console.log('from UI (ProductCheckInput)-> Actions (UIDActions) : creating action');
+    //Create action checkUID
+    UIDActions.checkUID();
+  },
 
+  onChange : function (event, data) {
+    switch (event) {
+      case 'checkComplete':
+      //do something
+      console.log('event checkComplete recieved now we will update the UI with the data: ' + data);
+        break;
+      default:
+
+    }
   }
-}
+});
+export default ProductCheckInput;

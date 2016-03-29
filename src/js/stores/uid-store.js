@@ -1,13 +1,14 @@
 import Reflux from 'reflux';
 import UIDActions from '../actions/uid-actions';
+import UIDService from '../services/uid-service';
 
 var UIDStore = Reflux.createStore({
   listenables : [UIDActions],
-  checkUID : function () {
-    console.log('UIDStore is listening to the checkUID action and it captured it now the store will execute the code to handle this action');
-    //querey the server
+  checkUID : function (uid) {
+    UIDService.post('/uid/check',{"uid" : uid}).then(function(response){
+        this.fireUpdate('checkComplete', response);
+    });
 
-    this.fireUpdate('checkComplete', 'null');
   },
 
   fireUpdate : function (event, data) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router'
 import ProductCheckInput from './ProductCheckInput';
 var App = React.createClass ({
   render : function () {
@@ -11,7 +12,7 @@ var App = React.createClass ({
         </div>
         <div className="row">
           <div className="col-sm-8 col-sm-offset-2">
-            <ProductCheckInput/>
+           {this.props.children}
             <div className="row" style={{height: 100}}></div>
             <div className="row">
               <div className="col-sm-6">
@@ -19,7 +20,7 @@ var App = React.createClass ({
                   <div className="panel-heading">Sign in as a Manufacturer</div>
                   <div className="panel-body">
                     <ul className="list-group">
-                      <li className="list-group-item">Add you own Brands</li>
+                      <li className="list-group-item">Add you own Brands<Link to="/about">About</Link></li>
                       <li className="list-group-item">Link it to you ERP system</li>
                       <li className="list-group-item">Get live feedback from brand community</li>
                       <li className="list-group-item">Detect Counterfieted product and avoid huge lost</li>

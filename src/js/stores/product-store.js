@@ -1,11 +1,12 @@
 import Reflux from 'reflux';
-import UIDActions from '../actions/uid-actions';
+import ProductActions from '../actions/product-actions';
 import HTTPService from '../services/http-service';
 
-var UIDStore = Reflux.createStore({
-  listenables : [UIDActions],
-  checkUID : function (uid) {
-    HTTPService.post('/uid/check',{"uid" : uid}).then(function(response){
+var ProductStore = Reflux.createStore({
+  listenables : [ProductActions],
+  addProduct : function (product) {
+    console.log("calling backend api method");
+    HTTPService.post('/product/add', product).then(function(response){
         this.fireUpdate('checkComplete', response);
     });
 
@@ -18,4 +19,4 @@ var UIDStore = Reflux.createStore({
 
 });
 
-export default UIDStore;
+export default ProductStore;

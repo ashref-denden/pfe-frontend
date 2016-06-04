@@ -2,12 +2,14 @@ import React from 'react';
 import Reflux from 'reflux';
 import ReactDOM from 'react-dom';
 import ProductStore from '../../stores/product-store';
+import PlatformUserStore from '../../stores/platform-user-store';
+import PlatformUserConstants from '../../constants/platform-user-constants';
 import ProductActions from '../../actions/product-actions';
 import { browserHistory } from 'react-router';
 
 var AddProduct = React.createClass({
 
-  mixins : [Reflux.listenTo(ProductStore, 'onChange')],
+  mixins : [Reflux.listenTo(ProductStore, 'onChange'), , Reflux.listenTo(PlatformUserStore, 'onChange')],
 
   contextTypes: {
     router: React.PropTypes.object.isRequired
@@ -17,43 +19,50 @@ var AddProduct = React.createClass({
     return {
       name: "",
       description: "",
-      serialNumber: ''
+      manufacturer: ""
+
     }
+  },
+
+  componentWillMount: function () {
+    this.checkPermissions();
   },
 
   render: function(){
     return (
       <div>
-      <hr />
       <form className="form-horizontal">
       <h2>Add new Product</h2>
       <hr/>
+
       <fieldset>
-
-        <div className="form-group">
-          <label className="col-md-3 control-label" htmlFor="name">Name</label>
-          <div className="col-md-6">
-            <input id="name" name="name" type="text" placeholder="product name" className="form-control input-md" ref="name" value={this.state.name} onChange={this.onFormInputChange} />
+        <div className="row">
+          <div className="form-group">
+            <label className="col-md-3 control-label" htmlFor="name">Name</label>
+            <div className="col-md-6">
+              <input id="name" name="name" type="text"
+              placeholder="product name" className="form-control input-md"
+              ref="name" value={this.state.name} onChange={this.onFormInputChange} />
+            </div>
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="col-md-3 control-label" htmlFor="description">Description</label>
-          <div className="col-md-6">
-          <textarea name="description" id="description" rows="10" placeholder="Description" className="form-control" ref="description" value={this.state.description} onChange={this.onFromInputChange} />
+        <div className="row">
+          <div className="form-group">
+            <label className="col-md-3 control-label" htmlFor="description">Description</label>
+            <div className="col-md-6">
+            <textarea name="description" id="description" rows="10"
+            placeholder="Description" className="form-control input-md"
+            ref="description" value={this.state.description} onChange={this.onFormInputChange} />
+            </div>
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="col-md-3 control-label" htmlFor="serialNumber">Serial Number</label>
-          <div className="col-md-6">
-          <input id="serialNumber" name="serialNumber" type="text" placeholder="product serial number" className="form-control input-md" ref="serialNumber" value={this.state.serialNumber} onChange={this.onFormInputChange} />
-          </div>
-        </div>
-
-        <div className="form-group">
-          <div className="col-md-6">
-            <button type="button" className="btn btn-primary" onClick={this.add}>Add</button>
+        <div className="row">
+          <div className="form-group">
+            <div className="col-md-9">
+              <button type="button" className="btn btn-primary pull-right" onClick={this.add}>Add</button>
+            </div>
           </div>
         </div>
       </fieldset>
@@ -65,19 +74,33 @@ var AddProduct = React.createClass({
   onFormInputChange : function(){
     this.setState({
       name: ReactDOM.findDOMNode(this.refs.name).value,
-      description: ReactDOM.findDOMNode(this.refs.description).value,
-      serialNumber: ReactDOM.findDOMNode(this.refs.serialNumber).value
+      description: ReactDOM.findDOMNode(this.refs.description).value
     })
   },
 
+  checkPermissions: function() {
+    var hasPermissions = true;
+    var user = PlatformUserStore.getUser();
+    var hasNoPermissions = !user || user.role !== PlatformUserConstants.role.manufacturer
+    if(hasNoPermissions) {
+      hasPermissions = false;
+      this.context.router.push('/');
+    }
+    return hasPermissions;
+  },
+
   add : function(){
-    console.log("adding a product");
+    this.state.manufacturer = PlatformUserStore.getUser().username;
     ProductActions.addProduct(this.state);
   },
 
-  onChange: function(event) {
+  onChange: function(event, data) {
     switch (event) {
-      case 'interestAdded':
+      case "product_added":
+      this.context.router.push('/products');
+      break;
+
+      case 'user_logout':
       this.context.router.push('/');
       break;
 

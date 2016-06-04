@@ -1,10 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
-import UIDActions from '../actions/uid-actions';
-import UIDStore from '../stores/uid-store';
+import SerialActions from '../actions/serial-actions';
+import PlatformUserStore from '../stores/platform-user-store';
 
 var ProductCheckInput = React.createClass ({
-  mixins : [Reflux.listenTo(UIDStore, 'onChange')],
 
   getInitialState : function() {
       return {uid : ""};
@@ -19,7 +19,7 @@ var ProductCheckInput = React.createClass ({
       <div className="row">
         <form className="form-group" role="form" onSubmit={this.check}>
           <div className="col-sm-10 col">
-            <input type="text" className="form-control" onChange={this.handleChange} value={this.state.uid} placeholder="Check your product authticity" />
+            <input type="text" className="form-control" onChange={this.handleChange} value={this.state.uid} placeholder="Check your product authticity" onChange={this.onFormInputChange} ref="uid"/>
           </div>
           <div className="col-sm-2 col">
             <button type="button" className="btn btn-primary" onClick={this.check}>Check</button>
@@ -29,20 +29,18 @@ var ProductCheckInput = React.createClass ({
     );
   },
 
-  check : function(event) {
-    event.preventDefault();
-    UIDActions.checkUID(this.state.uid);
+  onFormInputChange : function(){
+    this.setState({
+      uid: ReactDOM.findDOMNode(this.refs.uid).value
+    })
   },
 
-  onChange : function (event, data) {
-    switch (event) {
-      case 'checkComplete':
-      //do something
-      console.log('event checkComplete recieved now we will update the UI with the data: ' + data);
-        break;
-      default:
 
-    }
+  check : function(event) {
+    event.preventDefault();
+    SerialActions.checkUID({userId: PlatformUserStore.getUser().userId, uid: this.state.uid});
   }
+
 });
+
 export default ProductCheckInput;

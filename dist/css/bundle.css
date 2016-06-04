@@ -1,0 +1,134 @@
+/*!
+ * Start Bootstrap - Heroic Features HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+/***** navigation *****/
+.navbar-login {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+.navbar-login-session {
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size {
+    font-size: 87px;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #002D5C;
+}
+
+.hero-spacer {
+    margin-top: 50px;
+}
+
+/***** project *****/
+
+.project {
+    //margin-bottom: 30px;
+}
+.project .thumbnail {
+	overflow: auto;
+}
+
+.project .list-group .list-group-item {
+	padding: 5px 0px;
+	border: none;
+}
+
+/**** formular *****/
+
+.form-spacer{
+	margin-bottom: 20px;
+    border: 0;
+    border-top: 2px solid #eee;
+    width: 70%;
+}
+
+.add-offer .control-label{
+	text-align: left;
+}
+
+.add-offer .form-fields{
+	margin-left: 2%;
+	margin-top: 2%;
+}
+
+.easyeditor-toolbar{
+	padding-top: 12px;
+    padding-bottom: 0px;
+    padding-left: 1px;
+    padding-right: 1px
+}
+
+.add-offer .bootstrap-tagsinput{
+	width: 100%;
+}
+
+.has-error .bootstrap-tagsinput{
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.btn-margin-right{
+	margin-right: 10px;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+.show-interest-btn{
+  margin-right: 5px;
+}
+
+/* tags input css */
+.ReactTags__selected a.ReactTags__remove{
+  color: white;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.ReactTags__selected span.ReactTags__tag{
+  border-radius: .25em;
+  background-color: #5bc0de;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-block;
+  padding: 1px 5px;
+  margin: 0 1px;
+  cursor: move;
+  border-radius: 2px;
+  color: white;
+}
+
+.ReactTags__input{
+  margin-top: 1%;
+}
+
+.ReactTags__input input{
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  display: inline-block;
+  padding: 4px 6px;
+  color: #555;
+  vertical-align: middle;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 100%;
+  line-height: 22px;
+  cursor: text;
+}

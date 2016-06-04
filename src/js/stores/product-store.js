@@ -4,18 +4,29 @@ import HTTPService from '../services/http-service';
 
 var ProductStore = Reflux.createStore({
   listenables : [ProductActions],
-  addProduct : function (product) {
-    console.log("calling backend api method");
+
+  addProduct: function (product) {
     HTTPService.post('/product/add', product).then(function(response){
-        this.fireUpdate('checkComplete', response);
-    });
+        this.fireUpdate('product_added', response);
+    }.bind(this));
 
   },
 
-  fireUpdate : function (event, data) {
-    console.log('Processing actions finished now we will update the ui that listening to the event ' + event + ' and need the data:' + data);
+  getManufacturerProducts: function(manufacturerName) {
+    HTTPService.get('/product/' + manufacturerName).then(function(response){
+        this.fireUpdate('manufacturer_products', (response));
+    }.bind(this));
+  },
+
+  deleteManufacturerProducts: function(manufacturerName, productsIds) {
+    HTTPService.post('/product/' + manufacturerName + '/delete', productsIds).then(function(response){
+        this.fireUpdate('products_deleted', response);
+    }.bind(this));
+  },
+
+  fireUpdate: function (event, data) {
     this.trigger(event, data);
-    }
+  }
 
 });
 

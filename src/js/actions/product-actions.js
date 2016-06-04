@@ -1,7 +1,9 @@
 import Reflux from 'reflux';
 
 var ProductActions = Reflux.createActions([
-    'addProduct'
+    'addProduct',
+    'getManufacturerProducts',
+    'deleteManufacturerProducts'
 ]
 );
 export default ProductActions;
